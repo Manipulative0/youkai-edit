@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift_JIS 日本語文字列を16進数に変換</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .output {
+            margin-top: 20px;
+            word-wrap: break-word;
+            background-color: #ffffff;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shift_JIS 日本語文字列を16進数に変換</h1>
+    <textarea id="inputText" placeholder="ここに日本語を入力してください"></textarea><br>
+    <button onclick="convertToShiftJIS()">変換する</button>
+    <div class="output" id="outputArea">結果がここに表示されます</div>
+
+    <script>
+        async function convertToShiftJIS() {
+            const inputText = document.getElementById("inputText").value;
+            try {
+                // Shift_JISエンコード
+                const encoder = new TextEncoder("shift-jis");
+                const shiftJISArray = encoder.encode(inputText);
+                const hexResult = Array.from(shiftJISArray)
+                    .map(byte => byte.toString(16).toUpperCase().padStart(2, '0'))
+                    .join('');
+                document.getElementById("outputArea").textContent = hexResult;
+            } catch (e) {
+                document.getElementById("outputArea").textContent = "Shift_JISのエンコードに失敗しました。";
+            }
+        }
+    </script>
+</body>
+</html>
